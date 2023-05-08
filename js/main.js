@@ -50,19 +50,21 @@ form.addEventListener("submit", (event) => {
 
   document.addEventListener("click", (e) => {
     if (e.target.classList.contains("btn-complete")){
-        console.log(e.target.dataset.id);
+        completarTarea(e.target.dataset.id);
     }
   });
   const completarTarea= (id) => {
-    tareas.forEach(tarea => {
+    tareas.forEach((tarea) => {
         if(tarea.id == id){
             tarea.complete=!tarea.complete;
         }
-    })
-  }
+    });
+    localStorage.setItem("tareas", JSON.stringify(tareas));
+    renderTareas();
+  };
 
   document.addEventListener('DOMContentLoaded', () => 
   {
-    renderTareas()
+    renderTareas();
 });
 
