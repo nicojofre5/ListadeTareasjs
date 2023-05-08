@@ -23,6 +23,7 @@ form.addEventListener("submit", (event) => {
 
   // Guardo en almacenamiento local localStorage, para que queden los datos cuando reinicie la página
   localStorage.setItem("tareas", JSON.stringify(tareas));
+  renderTareas();
 });
   const renderTareas = () => {
     tareas = JSON.parse(localStorage.getItem("tareas")) || [];
@@ -33,7 +34,7 @@ form.addEventListener("submit", (event) => {
       (tarea) =>
         (tbody.innerHTML += `
     <tr>
-        <td>Tarea 1</td>
+        <td>${tarea.text}</td>
         <td>
             <button type="button">Completar</button>
             <button type="button">Editar</button>
