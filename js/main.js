@@ -8,16 +8,25 @@ const form = document.querySelector("form");
 form.addEventListener("submit", (event) => {
   // Prevengo el comportamiento por default d eformulario
   event.preventDefault();
-
+const inputId=document.querySelector('#id');
   const inputText = document.querySelector("#text");
+if(inputId.value){
+    tareas.forEach(tarea => {
+        if(tarea.id==inputId.value){
+            tarea.text=inputText.value;
+        }
+    });
+}
+else{
+    tareas.push({
+        id: Date.now(),
+        text: inputText.value,
+        complete: false,
+      });
+}
+  // Agrego datos a un array    
 
-  // Agrego datos a un array
-  tareas.push({
-    id: Date.now(),
-    text: inputText.value,
-    complete: false,
-  });
-
+    inputId.value=" ";
   // reseteo el input text
   event.target.reset();
 
@@ -41,7 +50,9 @@ const renderTareas = () => {
             <button type="button" data-id="${
               tarea.id
             }" class="btn-complete">Completar</button>
-            <button type="button">Editar</button>
+            <button type="button" onclick="editarTarea(${
+              tarea.id
+            })">Editar</button>
             <button type="button" onclick="borrarTarea(${
               tarea.id
             })">Borrar</button>
@@ -72,6 +83,15 @@ const borrarTarea = (id) => {
     const filtradas = tareas.filter((tarea) => tarea.id != id);
     localStorage.setItem("tareas", JSON.stringify(filtradas));
     renderTareas();
+  }
+};
+const editarTarea = (id) => {
+  const tarea = tareas.find((tarea) => tarea.id == id);
+  if (tarea) {
+    const inputId = document.querySelector("#id");
+    inputId.value = tarea.id;
+    const inputText = document.querySelector("#text");
+    inputText.value = tarea.text;
   }
 };
 document.addEventListener("DOMContentLoaded", () => {
